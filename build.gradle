@@ -1,0 +1,26 @@
+buildscript {
+    ext {
+        compose_version = '1.0.0-alpha11'
+        dagger_version = '2.32-alpha'
+    }
+    repositories {
+        google()
+        jcenter()
+    }
+    dependencies {
+        classpath "com.android.tools.build:gradle:7.0.0-alpha05"
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:1.4.21-2"
+        classpath "com.google.dagger:hilt-android-gradle-plugin:$dagger_version"
+    }
+}
+
+allprojects {
+    repositories {
+        google()
+        jcenter()
+    }
+}
+
+task clean(type: Delete) {
+    delete rootProject.buildDir
+}

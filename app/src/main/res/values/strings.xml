@@ -1,0 +1,5 @@
+<resources>
+  <string name="app_name">ComposePlayground</string>
+  <string name="retrieve_users">Retrieve users</string>
+  <string name="display_error_message">Display error message</string>
+</resources>
