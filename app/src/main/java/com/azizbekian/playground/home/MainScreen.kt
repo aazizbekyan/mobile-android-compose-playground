@@ -6,7 +6,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.savedinstancestate.savedInstanceState
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -42,12 +42,12 @@ fun MainScreen(
 ) {
   // we want to the user to survive configuration changes
   // in order to re-display the dialog if it was displayed previously
-  val (user, onUserChange) = savedInstanceState { EmptyUser }
+  var user = rememberSaveable { EmptyUser }
 
   // as soon as we receive a one-time event indicating that
   // dialog should get displayed we update the internal state
   // within this composable
-  if (effect is ShowDialog) onUserChange(effect.user)
+  if (effect is ShowDialog) user = effect.user
 
   // if the internally saved state is not the default one (which is EmptyUser)
   // then we are free to assume that we should display the dialog
@@ -60,7 +60,7 @@ fun MainScreen(
     NoticeDialog(user) {
       // we reset the state of in order to not display the dialog anymore
       // after configuration change
-      onUserChange(EmptyUser)
+      user = EmptyUser
       onDialogDismiss()
     }
   }
@@ -112,7 +112,7 @@ private fun UsersContainer(
       Loading -> {
         CircularProgressIndicator(
           modifier = it
-            .preferredSize(48.dp)
+            .size(48.dp)
             .padding(4.dp)
         )
       }

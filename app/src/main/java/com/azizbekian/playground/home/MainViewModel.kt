@@ -3,8 +3,8 @@ package com.azizbekian.playground.home
 import android.util.Log
 import androidx.lifecycle.viewModelScope
 import com.azizbekian.playground.base.BaseViewModel
-import com.azizbekian.playground.home.MainContract.Effect
-import com.azizbekian.playground.home.MainContract.Effect.ShowErrorMessage
+import com.azizbekian.playground.home.MainContract.*
+import com.azizbekian.playground.home.MainContract.Effect.*
 import com.azizbekian.playground.home.MainContract.Event.*
 import com.azizbekian.playground.home.MainContract.UsersState.Idle
 import com.azizbekian.playground.home.MainContract.UsersState.Success
@@ -15,27 +15,24 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class MainViewModel @Inject constructor() :
-  BaseViewModel<MainContract.Event, MainContract.State, Effect>() {
+class MainViewModel @Inject constructor() : BaseViewModel<Event, State, Effect>() {
 
-  override fun createInitialState(): MainContract.State {
-    return MainContract.State(Idle)
-  }
+  override fun createInitialState(): State = State(Idle)
 
-  override fun handleEvent(event: MainContract.Event) {
+  override fun handleEvent(event: Event) {
     when (event) {
       is OnLoadUsersClicked -> loadUsers()
       is OnShowErrorMessageClicked -> {
-        setEffect { Effect.ShowErrorMessage }
+        setEffect(ShowErrorMessage)
       }
       is OnSnackbarDismissed -> {
-        setEffect { Effect.None }
+        setEffect(None)
       }
       is OnUserClicked -> {
-        setEffect { Effect.ShowDialog(event.user) }
+        setEffect(ShowDialog(event.user))
       }
       is OnUserDialogDismissed -> {
-        setEffect { Effect.None }
+        setEffect(None)
       }
     }
   }
@@ -55,7 +52,7 @@ class MainViewModel @Inject constructor() :
       Log.i("titan", "Random number is $random")
       if (random % 5 == 0) {
         setState { copy(usersState = Idle) }
-        setEffect { ShowErrorMessage }
+        setEffect(ShowErrorMessage)
       } else {
         setState { copy(usersState = Success(users = Users)) }
       }

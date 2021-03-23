@@ -89,8 +89,7 @@ abstract class BaseViewModel<
     _uiState.value = newState
   }
 
-  protected fun setEffect(builder: () -> Effect) {
-    val effectValue = builder()
-    viewModelScope.launch { _effect.send(effectValue) }
+  protected fun setEffect(effect: Effect) {
+    viewModelScope.launch { _effect.send(effect) }
   }
 }

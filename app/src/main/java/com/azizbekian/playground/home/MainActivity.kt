@@ -1,6 +1,7 @@
 package com.azizbekian.playground.home
 
 import android.os.Bundle
+import androidx.activity.compose.setContent
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.material.MaterialTheme
@@ -10,7 +11,6 @@ import androidx.compose.material.rememberScaffoldState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.ui.platform.setContent
 import com.azizbekian.playground.home.MainContract.Effect.None
 import com.azizbekian.playground.home.MainContract.Event.*
 import com.azizbekian.playground.ui.theme.ComposePlaygroundTheme
@@ -47,7 +47,7 @@ private fun MainScreen(
 
   Scaffold(
     scaffoldState = scaffoldState,
-    bodyContent = {
+    content = {
       MainScreen(
         uiState = state,
         effect = effect,
